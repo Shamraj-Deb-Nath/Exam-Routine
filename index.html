@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Premier University — Exam Routine (Spring 2025, CSE Dept.)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;500&display=swap');
+         :root {
+            --primary: #0a3d62;
+            --accent: #fbb13c;
+            --text: #111;
+            --muted: #555;
+            --bg: #f9fafb;
+            --card-bg: #fff;
+            --border: #d1d5db;
+            --highlight: #c8e6c9;
+            --next-exam: #fff59d;
+            /* bright yellow */
+            --sem6: #e0f7fa;
+            --sem2: #fff3e0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        .container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 32px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        header img {
+            height: 72px;
+            margin-bottom: 8px;
+        }
+        
+        header h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 28px;
+            margin: 0;
+            color: var(--primary);
+        }
+        
+        header h2 {
+            font-size: 18px;
+            color: var(--muted);
+            margin: 4px 0;
+        }
+        
+        .accent-bar {
+            height: 6px;
+            width: 120px;
+            background: var(--accent);
+            margin: 12px auto;
+            border-radius: 3px;
+        }
+        /* Scrolling banner */
+        
+        .banner {
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 6px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            font-size: 16px;
+            padding: 10px 0;
+            position: relative;
+        }
+        
+        .banner span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scrollText 10s linear infinite;
+        }
+        
+        @keyframes scrollText {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        #liveDate {
+            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--primary);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+        
+        select,
+        input[type=search],
+        button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+        
+        button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background: #064273;
+        }
+        /* Table container with watermark */
+        
+        .table-container {
+            position: relative;
+            margin-top: 16px;
+        }
+        
+        .table-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            opacity: 0.05;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+        }
+        
+        .table-watermark img {
+            width: 100%;
+            height: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: center;
+        }
+        
+        th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        tr.sem-6th {
+            background-color: var(--sem6);
+        }
+        
+        tr.sem-2nd {
+            background-color: var(--sem2);
+        }
+        
+        tr.highlight {
+            background-color: var(--highlight) !important;
+        }
+        
+        tr.next-exam {
+            background-color: var(--next-exam) !important;
+            font-weight: 600;
+        }
+        
+        footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        
+        .sign {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .sign-line {
+            border-top: 1px solid #aaa;
+            width: 180px;
+            margin: 0 auto;
+            margin-bottom: 4px;
+        }
+        
+        .note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        
+        @media print {
+            body {
+                background: #fff;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .controls,
+            .banner,
+            #liveDate {
+                display: none;
+            }
+            .table-watermark {
+                opacity: 0.05;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt="Premier University Logo">
+            <h1>Premier University, Chattogram</h1>
+            <h2>Department of Computer Science & Engineering</h2>
+            <div class="accent-bar"></div>
+            <p>Examination Routine — <strong>Spring 2025</strong></p>
+        </header>
+
+        <div class="banner"><span>All the Best for Your Exams!</span></div>
+        <div id="liveDate"></div>
+
+        <div class="controls">
+            <select id="semesterFilter">
+      <option value="all">All Semesters</option>
+      <option value="6th">6th CSE</option>
+      <option value="2nd">2nd CSE</option>
+    </select>
+            <input type="search" id="searchInput" placeholder="Search courses...">
+            <button id="downloadCsvBtn">Download CSV</button>
+            <button id="printBtn">Print / Save PDF</button>
+        </div>
+
+        <div class="table-container">
+            <div class="table-watermark">
+                <img src="puc_logo.png" alt="Logo Watermark">
+            </div>
+            <table id="routineTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Semester</th>
+                        <th>Course Code</th>
+                        <th>Course Title</th>
+                        <th>Days Left</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="note">
+            Note: Students must carry their ID and admit cards. Routine is subject to change with prior notice.
+        </div>
+
+        <footer>
+            <div class="sign">
+                <div class="sign-line"></div>
+                <small>Head, Department of CSE</small>
+            </div>
+            <div class="sign">
+                <div class="sign-line"></div>
+                <small>Controller of Examinations</small>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const rows = [{
+            date: 'Tuesday, Oct 28, 2025',
+            time: '02.00PM – 05.00PM',
+            semester: '6th',
+            code: '3233(V4)',
+            title: 'Software Engineering'
+        }, {
+            date: 'Monday, Nov 03, 2025',
+            time: '10.00AM – 01.00PM',
+            semester: '2nd',
+            code: '1411(V4)',
+            title: 'Discrete Mathematics and Number Theory (DMNT)'
+        }, {
+            date: 'Monday, Nov 03, 2025',
+            time: '02.00PM – 05.00PM',
+            semester: '6th',
+            code: '3567(V4)',
+            title: 'Computer Networks'
+        }, {
+            date: 'Sunday, Nov 09, 2025',
+            time: '02.00PM – 05.00PM',
+            semester: '6th',
+            code: '3637(V4)',
+            title: 'Computer and Cyber Security'
+        }, {
+            date: 'Saturday, Nov 15, 2025',
+            time: '02.00PM – 05.00PM',
+            semester: '6th',
+            code: '4427(V4)',
+            title: 'Data Communication'
+        }, {
+            date: 'Wednesday, Nov 19, 2025',
+            time: '02.00PM – 05.00PM',
+            semester: '6th',
+            code: '3301(V4)',
+            title: 'Project Management and Entrepreneurship'
+        }];
+
+        const tbody = document.querySelector('#routineTable tbody');
+        const semesterFilter = document.getElementById('semesterFilter');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderTable(data) {
+            tbody.innerHTML = '';
+            const today = new Date();
+            let nextExamIndex = null;
+            let minDiff = Infinity;
+
+            // find next upcoming exam
+            data.forEach((r, i) => {
+                const examDate = new Date(r.date.replace(/,/g, ''));
+                const diffDays = Math.max(Math.ceil((examDate - today) / (1000 * 60 * 60 * 24)), 0);
+                if (diffDays > 0 && diffDays < minDiff) {
+                    minDiff = diffDays;
+                    nextExamIndex = i;
+                }
+            });
+
+            data.forEach((r, i) => {
+                const tr = document.createElement('tr');
+                tr.classList.add(r.semester === '6th' ? 'sem-6th' : 'sem-2nd');
+                const examDate = new Date(r.date.replace(/,/g, ''));
+                const diffDays = Math.max(Math.ceil((examDate - today) / (1000 * 60 * 60 * 24)), 0);
+
+                if (examDate.toDateString() === today.toDateString()) tr.classList.add('highlight');
+                if (i === nextExamIndex) tr.classList.add('next-exam');
+
+                tr.innerHTML = `
+      <td>${r.date}</td>
+      <td>${r.time}</td>
+      <td>${r.semester} CSE</td>
+      <td>${r.code}</td>
+      <td>${r.title}</td>
+      <td>${diffDays} day(s)</td>
+    `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function applyFilters() {
+            const sem = semesterFilter.value;
+            const q = searchInput.value.toLowerCase();
+            const filtered = rows.filter(r => {
+                if (sem !== 'all' && r.semester !== sem) return false;
+                if (!q) return true;
+                return (r.date + r.time + r.code + r.title).toLowerCase().includes(q);
+            });
+            renderTable(filtered);
+        }
+
+        semesterFilter.addEventListener('change', applyFilters);
+        searchInput.addEventListener('input', applyFilters);
+
+        function toCSV(data) {
+            const header = ['Date', 'Time', 'Semester', 'Course Code', 'Course Title', 'Days Left'];
+            const today = new Date();
+            const lines = data.map(r => {
+                const examDate = new Date(r.date.replace(/,/g, ''));
+                const diffDays = Math.max(Math.ceil((examDate - today) / (1000 * 60 * 60 * 24)), 0);
+                return [r.date, r.time, r.semester + ' CSE', r.code, `"${r.title.replace(/"/g,'""')}"`, diffDays].join(',');
+            });
+            return [header.join(','), ...lines].join('\n');
+        }
+
+        document.getElementById('downloadCsvBtn').addEventListener('click', () => {
+            const csv = toCSV(rows);
+            const blob = new Blob([csv], {
+                type: 'text/csv;charset=utf-8;'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'premier-university-cse-exam-routine-spring-2025.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+        function updateLiveDate() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            };
+            document.getElementById('liveDate').textContent = "Today: " + now.toLocaleDateString('en-US', options);
+            renderTable(rows);
+        }
+
+        setInterval(updateLiveDate, 1000);
+        updateLiveDate();
+    </script>
+</body>
+
+</html>
