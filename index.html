@@ -15,9 +15,9 @@
             --bg: #f9fafb;
             --card-bg: #fff;
             --border: #d1d5db;
-            --highlight: #c8e6c9;
-            --next-exam: #fff59d;
-            /* bright yellow */
+            --highlight: #fff59d;
+            /* next exam */
+            --done: #c8e6c9;
             --sem6: #e0f7fa;
             --sem2: #fff3e0;
         }
@@ -191,14 +191,36 @@
             background-color: var(--sem2);
         }
         
-        tr.highlight {
-            background-color: var(--highlight) !important;
-        }
-        
         tr.next-exam {
-            background-color: var(--next-exam) !important;
+            background-color: var(--highlight);
             font-weight: 600;
         }
+        
+        tr.done {
+            background-color: var(--done);
+            font-weight: 500;
+        }
+        
+        .badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #fff;
+        }
+        
+        .badge-6th {
+            background: #00bcd4;
+        }
+        
+        .badge-2nd {
+            background: #ff9800;
+        }
+        
+        .badge-next {
+            background: #fbc02d;
+            color: #000;
+        }
+        /* Footer & Note */
         
         footer {
             margin-top: 24px;
@@ -226,21 +248,38 @@
             font-size: 13px;
             color: var(--muted);
         }
+        /* Mobile Responsive Card Style */
         
-        @media print {
-            body {
-                background: #fff;
+        @media(max-width:768px) {
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
             }
-            .container {
-                box-shadow: none;
-            }
-            .controls,
-            .banner,
-            #liveDate {
+            thead {
                 display: none;
             }
-            .table-watermark {
-                opacity: 0.05;
+            tr {
+                margin-bottom: 16px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+            td {
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 12px;
+                background: #fff;
+                position: relative;
+            }
+            td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--muted);
             }
         }
     </style>
@@ -261,10 +300,10 @@
 
         <div class="controls">
             <select id="semesterFilter">
-      <option value="all">All Semesters</option>
-      <option value="6th">6th CSE</option>
-      <option value="2nd">2nd CSE</option>
-    </select>
+<option value="all">All Semesters</option>
+<option value="6th">6th CSE</option>
+<option value="2nd">2nd CSE</option>
+</select>
             <input type="search" id="searchInput" placeholder="Search courses...">
             <button id="downloadCsvBtn">Download CSV</button>
             <button id="printBtn">Print / Save PDF</button>
@@ -272,7 +311,7 @@
 
         <div class="table-container">
             <div class="table-watermark">
-                <img src="puc_logo.png" alt="Logo Watermark">
+                <img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt="Logo Watermark">
             </div>
             <table id="routineTable">
                 <thead>
@@ -282,6 +321,7 @@
                         <th>Semester</th>
                         <th>Course Code</th>
                         <th>Course Title</th>
+                        <th>Status</th>
                         <th>Days Left</th>
                     </tr>
                 </thead>
@@ -289,9 +329,7 @@
             </table>
         </div>
 
-        <div class="note">
-            Note: Students must carry their ID and admit cards. Routine is subject to change with prior notice.
-        </div>
+        <div class="note">Note: Students must carry their ID and admit cards.</div>
 
         <footer>
             <div class="sign">
@@ -317,7 +355,7 @@
             time: '10.00AM – 01.00PM',
             semester: '2nd',
             code: '1411(V4)',
-            title: 'Discrete Mathematics and Number Theory (DMNT)'
+            title: 'Discrete Mathematics and Number Theory'
         }, {
             date: 'Monday, Nov 03, 2025',
             time: '02.00PM – 05.00PM',
@@ -354,7 +392,6 @@
             let nextExamIndex = null;
             let minDiff = Infinity;
 
-            // find next upcoming exam
             data.forEach((r, i) => {
                 const examDate = new Date(r.date.replace(/,/g, ''));
                 const diffDays = Math.max(Math.ceil((examDate - today) / (1000 * 60 * 60 * 24)), 0);
@@ -366,21 +403,32 @@
 
             data.forEach((r, i) => {
                 const tr = document.createElement('tr');
-                tr.classList.add(r.semester === '6th' ? 'sem-6th' : 'sem-2nd');
                 const examDate = new Date(r.date.replace(/,/g, ''));
                 const diffDays = Math.max(Math.ceil((examDate - today) / (1000 * 60 * 60 * 24)), 0);
+                let status = '';
 
-                if (examDate.toDateString() === today.toDateString()) tr.classList.add('highlight');
-                if (i === nextExamIndex) tr.classList.add('next-exam');
+                // Done if exam in past
+                if (examDate < today.setHours(0, 0, 0, 0)) {
+                    tr.classList.add('done');
+                    status = '✅ Done';
+                } else if (i === nextExamIndex) {
+                    tr.classList.add('next-exam');
+                    status = 'Next';
+                } else {
+                    status = '';
+                }
+
+                tr.classList.add(r.semester === '6th' ? 'sem-6th' : 'sem-2nd');
 
                 tr.innerHTML = `
-      <td>${r.date}</td>
-      <td>${r.time}</td>
-      <td>${r.semester} CSE</td>
-      <td>${r.code}</td>
-      <td>${r.title}</td>
-      <td>${diffDays} day(s)</td>
-    `;
+    <td data-label="Date">${r.date}</td>
+    <td data-label="Time">${r.time}</td>
+    <td data-label="Semester"><span class="badge ${r.semester==='6th'?'badge-6th':'badge-2nd'}">${r.semester} CSE</span></td>
+    <td data-label="Course Code">${r.code}</td>
+    <td data-label="Course Title">${r.title}</td>
+    <td data-label="Status">${status}</td>
+    <td data-label="Days Left">${diffDays}</td>
+  `;
                 tbody.appendChild(tr);
             });
         }
@@ -400,12 +448,15 @@
         searchInput.addEventListener('input', applyFilters);
 
         function toCSV(data) {
-            const header = ['Date', 'Time', 'Semester', 'Course Code', 'Course Title', 'Days Left'];
+            const header = ['Date', 'Time', 'Semester', 'Course Code', 'Course Title', 'Status', 'Days Left'];
             const today = new Date();
             const lines = data.map(r => {
                 const examDate = new Date(r.date.replace(/,/g, ''));
                 const diffDays = Math.max(Math.ceil((examDate - today) / (1000 * 60 * 60 * 24)), 0);
-                return [r.date, r.time, r.semester + ' CSE', r.code, `"${r.title.replace(/"/g,'""')}"`, diffDays].join(',');
+                let status = '';
+                if (examDate < today.setHours(0, 0, 0, 0)) status = 'Done';
+                else status = '';
+                return [r.date, r.time, r.semester + ' CSE', r.code, `"${r.title.replace(/"/g,'""')}"`, status, diffDays].join(',');
             });
             return [header.join(','), ...lines].join('\n');
         }
