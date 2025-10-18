@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Premier University — Exam Routine (Spring 2025, CSE Dept.)</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -21,6 +21,7 @@
             --done-bg: #c8e6c9;
             --sem6: #e0f7fa;
             --sem2: #fff3e0;
+            --success: #16a34a;
         }
         
         body.dark {
@@ -102,14 +103,14 @@
             font-weight: 600;
         }
         
-        .marquee {
+        .banner .marquee {
             white-space: nowrap;
             overflow: hidden;
             flex: 1;
             margin-right: 10px;
         }
         
-        .marquee span {
+        .banner .marquee span {
             display: inline-block;
             padding-left: 100%;
             animation: marq 12s linear infinite;
@@ -117,10 +118,10 @@
         
         @keyframes marq {
             0% {
-                transform: translateX(0)
+                transform: translateX(0);
             }
             100% {
-                transform: translateX(-100%)
+                transform: translateX(-100%);
             }
         }
         
@@ -172,7 +173,7 @@
             flex-wrap: wrap;
         }
         
-        .stat {
+        .summary .stat {
             background: rgba(0, 0, 0, .03);
             padding: 10px 12px;
             border-radius: 8px;
@@ -210,11 +211,16 @@
             top: 50%;
             left: 50%;
             width: 320px;
-            opacity: .05;
+            opacity: 0.05;
             transform: translate(-50%, -50%) rotate(-25deg);
             pointer-events: none;
             user-select: none;
             z-index: 0;
+        }
+        
+        .table-watermark img {
+            width: 100%;
+            height: auto;
         }
         
         table {
@@ -269,6 +275,21 @@
             }
         }
         
+        @media (max-width:820px) {
+            table {
+                display: none;
+            }
+            .cards {
+                display: block;
+            }
+        }
+        
+        @media (min-width:821px) {
+            .cards {
+                display: none;
+            }
+        }
+        
         .card {
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -318,47 +339,17 @@
             color: var(--muted);
         }
         
-        .right {
-            text-align: right;
-        }
-        
-        a.small-link {
-            font-size: 13px;
-            color: var(--primary);
-            text-decoration: none;
-            margin-left: 6px;
-        }
-        
-        @media(max-width:820px) {
-            table {
-                display: none;
-            }
-            .cards {
-                display: block;
-            }
-            .summary {
-                gap: 8px;
-            }
-        }
-        
-        @media(min-width:821px) {
-            .cards {
-                display: none;
-            }
-        }
-        
         @media print {
             body {
-                background: #fff
+                background: #fff;
             }
             .controls,
             .banner,
-            #liveDate,
-            .top-actions {
-                display: none
+            #liveDate {
+                display: none;
             }
             .table-watermark {
-                opacity: .05
+                opacity: 0.05;
             }
             .container {
                 box-shadow: none;
@@ -370,7 +361,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" role="main">
         <header>
             <img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt="Premier University logo">
             <h1>Premier University, Chattogram</h1>
@@ -380,12 +371,8 @@
         </header>
 
         <div class="banner">
-            <div class="marquee" aria-hidden="true"><span>All the Best for Your Exams! • Stay Calm • Read Questions Carefully • Good Luck!</span></div>
-            <div class="top-actions">
-                <button id="themeToggle" title="Toggle dark mode">🌗 Theme</button>
-                <button id="downloadCsvBtn" class="btn">Download CSV</button>
-                <button id="pdfBtn" class="btn">Export PDF</button>
-            </div>
+            <div class="marquee"><span>All the Best for Your Exams! • Stay Calm • Read Carefully • Good Luck!</span></div>
+            <button id="themeToggle" title="Toggle dark mode">🌗 Theme</button>
         </div>
 
         <div id="liveDate">Today: —</div>
@@ -398,9 +385,7 @@
 </select>
             <input type="search" id="searchInput" placeholder="Search course, code...">
             <button id="printBtn" class="btn">Print / Save PDF</button>
-            <div class="muted">Share:</div>
-            <a id="waShare" class="small-link" href="#" target="_blank">WhatsApp</a>
-            <a id="fbShare" class="small-link" href="#" target="_blank">Facebook</a>
+            <button id="pdfBtn" class="btn">Export PDF</button>
         </div>
 
         <div class="summary">
@@ -417,13 +402,15 @@
                 <div id="upcomingCount" style="font-size:18px;font-weight:700">0</div>
             </div>
             <div class="progress-wrap">
-                <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Progress</div>
-                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="progressBar" style="width:0%"></i></div>
+                <div style="font-size:13px;color:var(--muted); margin-bottom:6px">Progress</div>
+                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <i id="progressBar"></i>
+                </div>
             </div>
         </div>
 
         <div class="table-container">
-            <div class="table-watermark" aria-hidden="true"><img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png"></div>
+            <div class="table-watermark"><img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt=""></div>
             <table id="routineTable">
                 <thead>
                     <tr>
@@ -433,11 +420,11 @@
                         <th>Course Code</th>
                         <th>Course Title</th>
                         <th>Time Left</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
+
             <div class="cards" id="cardList"></div>
         </div>
 
@@ -451,48 +438,47 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-        // Exam data
         const rows = [{
-            dateLabel: 'Tue, Oct 28, 2025',
+            dateLabel: 'Tuesday, Oct 28, 2025',
             time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3233(V4)',
             title: 'Software Engineering',
             iso: '2025-10-28T14:00:00'
         }, {
-            dateLabel: 'Mon, Nov 03, 2025',
+            dateLabel: 'Monday, Nov 03, 2025',
             time: '10:00AM – 01:00PM',
             semester: '2nd',
             code: '1411(V4)',
             title: 'Discrete Mathematics',
             iso: '2025-11-03T10:00:00'
         }, {
-            dateLabel: 'Mon, Nov 03, 2025',
+            dateLabel: 'Monday, Nov 03, 2025',
             time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3567(V4)',
             title: 'Computer Networks',
             iso: '2025-11-03T14:00:00'
         }, {
-            dateLabel: 'Sun, Nov 09, 2025',
+            dateLabel: 'Sunday, Nov 09, 2025',
             time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3637(V4)',
-            title: 'Computer & Cyber Security',
+            title: 'Computer and Cyber Security',
             iso: '2025-11-09T14:00:00'
         }, {
-            dateLabel: 'Sat, Nov 15, 2025',
+            dateLabel: 'Saturday, Nov 15, 2025',
             time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '4427(V4)',
             title: 'Data Communication',
             iso: '2025-11-15T14:00:00'
         }, {
-            dateLabel: 'Wed, Nov 19, 2025',
+            dateLabel: 'Wednesday, Nov 19, 2025',
             time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3301(V4)',
-            title: 'Project Management & Entrepreneurship',
+            title: 'Project Management',
             iso: '2025-11-19T14:00:00'
         }];
 
@@ -505,14 +491,10 @@
         const doneCount = document.getElementById('doneCount');
         const upcomingCount = document.getElementById('upcomingCount');
         const progressBar = document.getElementById('progressBar');
-        const downloadCsvBtn = document.getElementById('downloadCsvBtn');
         const printBtn = document.getElementById('printBtn');
         const pdfBtn = document.getElementById('pdfBtn');
         const themeToggle = document.getElementById('themeToggle');
-        const waShare = document.getElementById('waShare');
-        const fbShare = document.getElementById('fbShare');
 
-        // Filter function
         function filteredRows() {
             const sem = semesterFilter.value;
             const q = searchInput.value.trim().toLowerCase();
@@ -523,7 +505,6 @@
             });
         }
 
-        // Render table & cards
         function renderAll() {
             const data = filteredRows();
             renderTable(data);
@@ -546,134 +527,89 @@
             data.forEach((r, i) => {
                 const tr = document.createElement('tr');
                 tr.classList.add(r.semester === '6th' ? 'sem-6th' : 'sem-2nd');
-                const examDate = new Date(r.iso);
-                const isDone = examDate - now <= 0;
-                if (isDone) tr.classList.add('done');
-                if (!isDone && i === nextIdx) tr.classList.add('next-exam');
-                tr.innerHTML = `
-<td>${r.dateLabel}</td>
-<td>${r.time}</td>
-<td>${r.semester} CSE</td>
-<td>${r.code}</td>
-<td style="text-align:left">${r.title}</td>
-<td class="timeleft" data-iso="${r.iso}">--</td>
-<td><button class="btn addCal" data-idx="${i}">Add to Google Calendar</button></td>`;
+                const diff = new Date(r.iso) - now;
+                if (diff <= 0) tr.classList.add('done');
+                if (i === nextIdx) tr.classList.add('next-exam');
+                tr.innerHTML = `<td>${r.dateLabel}</td><td>${r.time}</td><td>${r.semester} CSE</td><td>${r.code}</td><td style="text-align:left">${r.title}</td><td class="timeleft" data-iso="${r.iso}">--</td>`;
                 tbody.appendChild(tr);
-            });
-            document.querySelectorAll('.addCal').forEach(btn => {
-                btn.addEventListener('click', () => window.open(buildGoogleCalendarLink(rows[btn.dataset.idx]), '_blank'));
             });
         }
 
         function renderCards(data) {
             cardList.innerHTML = '';
-            data.forEach((r, i) => {
-                const d = new Date(r.iso);
-                const isDone = d - new Date() <= 0;
-                const div = document.createElement('div');
-                div.className = 'card';
-                div.innerHTML = `
-<div class="meta"><div style="font-weight:700">${r.dateLabel}</div><div class="muted">${r.time}</div><div style="margin-top:8px"><span class="chip">${r.semester} CSE</span></div></div>
-<div class="main">
-<div style="display:flex; justify-content:space-between; gap:8px; align-items:center">
-<div><strong>${r.code}</strong> — ${r.title}</div>
-<div class="muted" style="font-size:13px"><span class="timeleft" data-iso="${r.iso}">--</span></div>
-</div>
-<div style="margin-top:10px; display:flex; gap:8px; align-items:center">
-<button class="btn addCalMobile" data-idx="${i}">Add Calendar</button>
-</div>
-</div>`;
-                if (isDone) div.style.opacity = '0.8';
-                cardList.appendChild(div);
-            });
-            document.querySelectorAll('.addCalMobile').forEach(b => b.addEventListener('click', () => window.open(buildGoogleCalendarLink(rows[b.dataset.idx]), '_blank')));
-        }
-
-        // Google Calendar link
-        function isoForGoogle(dt) {
-            return dt.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-        }
-
-        function buildGoogleCalendarLink(row) {
-            const start = new Date(row.iso);
-            const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
-            const dates = isoForGoogle(start) + '/' + isoForGoogle(end);
-            const text = encodeURIComponent(`${row.code} — ${row.title}`);
-            const details = encodeURIComponent(`Exam for ${row.title} (${row.code})`);
-            const location = encodeURIComponent('Premier University, Chattogram');
-            return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
-        }
-
-        // Update time left
-        function updateTimeLeftCells() {
-            const now = new Date();
-            document.querySelectorAll('.timeleft').forEach(td => {
-                const exam = new Date(td.dataset.iso);
-                const diff = exam - now;
-                if (diff <= 0) {
-                    td.textContent = '✅ Done';
-                } else {
-                    const days = Math.floor(diff / 86400000);
-                    const hours = Math.floor((diff % 86400000) / 3600000);
-                    const mins = Math.floor((diff % 3600000) / 60000);
-                    const secs = Math.floor((diff % 60000) / 1000);
-                    td.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
-                    if (diff <= 86400000) td.textContent += ' ⚡', td.style.color = 'crimson';
-                    else td.style.color = '';
-                }
+            if (!data.length) {
+                cardList.style.display = 'block';
+                cardList.innerHTML = '<div class="muted">No exams found.</div>';
+                return;
+            }
+            data.forEach(r => {
+                const now = new Date();
+                const diff = new Date(r.iso) - now;
+                const card = document.createElement('div');
+                card.className = 'card ' + (diff <= 0 ? 'done' : '');
+                card.innerHTML = `<div class="meta"><div>${r.dateLabel}</div><div>${r.time}</div><div>${r.semester} CSE</div></div>
+    <div class="main"><div><strong>${r.code}</strong> — ${r.title}</div>
+    <div class="chip">Time Left: <span class="timeleft" data-iso="${r.iso}">--</span></div></div>`;
+                cardList.appendChild(card);
             });
         }
 
-        // Summary
-        function updateSummary(currentData) {
-            const total = currentData.length;
+        function updateSummary(data) {
             const now = new Date();
-            const done = currentData.filter(r => new Date(r.iso) - now <= 0).length;
+            const total = data.length;
+            const done = data.filter(r => new Date(r.iso) < now).length;
             const upcoming = total - done;
             totalCount.textContent = total;
             doneCount.textContent = done;
             upcomingCount.textContent = upcoming;
-            progressBar.style.width = Math.round(done / total * 100) + '%';
+            progressBar.style.width = total ? Math.round((done / total) * 100) + '%' : '0%';
         }
 
-        // Dark mode
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-        });
+        function updateCountdowns() {
+            document.querySelectorAll('.timeleft').forEach(el => {
+                const iso = el.dataset.iso;
+                if (!iso) return;
+                const diff = new Date(iso) - new Date();
+                if (diff <= 0) {
+                    el.textContent = 'Done';
+                    return;
+                }
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                el.textContent = `${d}d ${h}h ${m}m ${s}s`;
+            });
+        }
+        setInterval(updateCountdowns, 1000);
 
-        // Print / PDF
-        printBtn.addEventListener('click', () => window.print());
-        pdfBtn.addEventListener('click', () => html2pdf().from(document.querySelector('.container')).save());
+        function updateLiveDate() {
+            liveDate.textContent = 'Today: ' + new Date().toLocaleString('en-GB', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+        updateLiveDate();
+        setInterval(updateLiveDate, 60000);
 
-        // CSV Download
-        downloadCsvBtn.addEventListener('click', () => {
-            const csvContent = 'data:text/csv;charset=utf-8,Date,Time,Semester,Course Code,Title\n' + rows.map(r => `${r.dateLabel},${r.time},${r.semester},${r.code},${r.title}`).join('\n');
-            const a = document.createElement('a');
-            a.href = encodeURI(csvContent);
-            a.download = 'exam_routine.csv';
-            a.click();
-        });
-
-        // Filters
         semesterFilter.addEventListener('change', renderAll);
         searchInput.addEventListener('input', renderAll);
 
-        // Share links
-        const pageUrl = encodeURIComponent(window.location.href);
-        waShare.href = `https://api.whatsapp.com/send?text=Check%20my%20exam%20routine:%20${pageUrl}`;
-        fbShare.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+        themeToggle.addEventListener('click', () => document.body.classList.toggle('dark'));
 
-        // Live date
-        function updateLiveDate() {
-            liveDate.textContent = 'Today: ' + new Date().toLocaleDateString(undefined, {
-                weekday: 'short',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
-        }
-        setInterval(updateTimeLeftCells, 1000);
-        updateLiveDate();
+        printBtn.addEventListener('click', () => window.print());
+        pdfBtn.addEventListener('click', () => {
+            html2pdf().set({
+                margin: 0.2,
+                filename: 'exam_routine.pdf',
+                html2canvas: {
+                    scale: 2
+                }
+            }).from(document.querySelector('.container')).save();
+        });
+
         renderAll();
     </script>
 </body>
