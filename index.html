@@ -3,11 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Premier University — Exam Routine (Spring 2025, CSE Dept.)</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;500&display=swap');
-        :root {
+         :root {
             --primary: #0a3d62;
             --accent: #fbb13c;
             --text: #111;
@@ -21,144 +23,198 @@
             --sem2: #fff3e0;
         }
         
+        body.dark {
+            --primary: #9ad3ff;
+            --accent: #ffb86b;
+            --text: #ecf0f1;
+            --muted: #cbd5e1;
+            --bg: #0b1220;
+            --card-bg: #061224;
+            --border: #162336;
+            --highlight: #4b5563;
+            --done-bg: #013220;
+            --sem6: #042f2e;
+            --sem2: #2b1b00;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
-            padding: 0;
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
         }
         
         .container {
-            max-width: 960px;
-            margin: 40px auto;
-            padding: 32px;
+            max-width: 1040px;
+            margin: 28px auto;
+            padding: 26px;
             background: var(--card-bg);
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            position: relative;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, .08);
         }
         
         header {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
         
         header img {
-            height: 72px;
-            margin-bottom: 8px;
+            height: 64px;
+            margin: 0 auto 6px;
+            display: block;
         }
         
         header h1 {
             font-family: 'Merriweather', serif;
-            font-size: 28px;
+            font-size: 26px;
             margin: 0;
             color: var(--primary);
         }
         
         header h2 {
-            font-size: 18px;
+            font-size: 15px;
             color: var(--muted);
-            margin: 4px 0;
+            margin: 6px 0;
         }
         
         .accent-bar {
-            height: 6px;
             width: 120px;
+            height: 6px;
             background: var(--accent);
-            margin: 12px auto;
-            border-radius: 3px;
+            margin: 10px auto;
+            border-radius: 4px;
         }
-        /* Scrolling banner */
         
         .banner {
-            overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
-            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--primary), #0e6fa4);
             color: #fff;
-            border-radius: 6px;
-            font-weight: 500;
-            margin-bottom: 16px;
-            font-size: 16px;
-            padding: 10px 0;
-            position: relative;
+            margin-bottom: 14px;
+            font-weight: 600;
         }
         
-        .banner span {
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .marquee span {
             display: inline-block;
             padding-left: 100%;
-            animation: scrollText 10s linear infinite;
+            animation: marq 12s linear infinite;
         }
         
-        @keyframes scrollText {
+        @keyframes marq {
             0% {
-                transform: translateX(0);
+                transform: translateX(0)
             }
             100% {
-                transform: translateX(-100%);
+                transform: translateX(-100%)
             }
         }
         
         #liveDate {
             text-align: center;
-            margin-bottom: 16px;
-            font-weight: 500;
-            font-size: 15px;
+            margin-bottom: 12px;
+            font-weight: 600;
             color: var(--primary);
         }
         
         .controls {
             display: flex;
-            justify-content: center;
             gap: 10px;
+            align-items: center;
+            justify-content: center;
             flex-wrap: wrap;
-            margin-top: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         select,
         input[type=search],
         button {
             padding: 8px 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid var(--border);
             font-size: 14px;
+            background: transparent;
+            color: var(--text);
         }
         
-        button {
+        .btn {
             background: var(--primary);
             color: #fff;
             border: none;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
         }
         
-        button:hover {
-            background: #064273;
+        .btn:active {
+            transform: translateY(1px);
         }
-        /* Table container with watermark */
+        
+        .summary {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin: 14px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            background: rgba(0, 0, 0, .03);
+            padding: 10px 12px;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .progress-wrap {
+            flex: 1;
+            min-width: 220px;
+            margin-left: 8px;
+        }
+        
+        .progress {
+            height: 12px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        
+        .progress>i {
+            display: block;
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 600ms ease;
+        }
         
         .table-container {
             position: relative;
-            margin-top: 16px;
         }
         
         .table-watermark {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300px;
-            opacity: 0.05;
-            transform: translate(-50%, -50%) rotate(-30deg);
+            width: 320px;
+            opacity: .05;
+            transform: translate(-50%, -50%) rotate(-25deg);
             pointer-events: none;
             user-select: none;
             z-index: 0;
-        }
-        
-        .table-watermark img {
-            width: 100%;
-            height: auto;
         }
         
         table {
@@ -179,7 +235,8 @@
         th {
             background: var(--primary);
             color: #fff;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 13px;
         }
         
         tr.sem-6th {
@@ -190,73 +247,123 @@
             background-color: var(--sem2);
         }
         
-        tr.highlight {
-            background-color: var(--highlight) !important;
-        }
-        
         tr.done {
             background-color: var(--done-bg);
         }
         
         tr.next-exam {
             background-color: var(--highlight);
-            font-weight: 600;
-            animation: pulseNext 2s infinite;
+            font-weight: 700;
+            animation: pulse 2s infinite;
         }
         
-        @keyframes pulseNext {
+        @keyframes pulse {
             0% {
-                box-shadow: 0 0 0 rgba(251, 193, 59, 0.4);
+                box-shadow: 0 0 0 rgba(251, 193, 59, .25);
             }
             50% {
-                box-shadow: 0 0 20px rgba(251, 193, 59, 0.6);
+                box-shadow: 0 0 20px rgba(251, 193, 59, .45);
             }
             100% {
-                box-shadow: 0 0 0 rgba(251, 193, 59, 0.4);
+                box-shadow: 0 0 0 rgba(251, 193, 59, .25);
             }
         }
         
-        footer {
-            margin-top: 24px;
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: var(--card-bg);
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        
+        .card .meta {
+            flex: 0 0 130px;
             font-size: 13px;
             color: var(--muted);
         }
         
-        .sign {
-            text-align: center;
-            margin-top: 20px;
+        .card .main {
+            flex: 1;
+        }
+        
+        .chip {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .04);
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        footer {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 13px;
         }
         
         .sign-line {
             border-top: 1px solid #aaa;
             width: 180px;
-            margin: 0 auto;
-            margin-bottom: 4px;
+            margin: 0 auto 6px;
         }
         
-        .note {
-            margin-top: 16px;
-            font-size: 13px;
+        .muted {
             color: var(--muted);
+        }
+        
+        .right {
+            text-align: right;
+        }
+        
+        a.small-link {
+            font-size: 13px;
+            color: var(--primary);
+            text-decoration: none;
+            margin-left: 6px;
+        }
+        
+        @media(max-width:820px) {
+            table {
+                display: none;
+            }
+            .cards {
+                display: block;
+            }
+            .summary {
+                gap: 8px;
+            }
+        }
+        
+        @media(min-width:821px) {
+            .cards {
+                display: none;
+            }
         }
         
         @media print {
             body {
-                background: #fff;
-            }
-            .container {
-                box-shadow: none;
+                background: #fff
             }
             .controls,
             .banner,
-            #liveDate {
-                display: none;
+            #liveDate,
+            .top-actions {
+                display: none
             }
             .table-watermark {
-                opacity: 0.05;
+                opacity: .05
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0;
             }
         }
     </style>
@@ -265,31 +372,58 @@
 <body>
     <div class="container">
         <header>
-            <img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt="Premier University Logo">
+            <img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt="Premier University logo">
             <h1>Premier University, Chattogram</h1>
             <h2>Department of Computer Science & Engineering</h2>
             <div class="accent-bar"></div>
             <p>Examination Routine — <strong>Spring 2025</strong></p>
         </header>
 
-        <div class="banner"><span>All the Best for Your Exams!</span></div>
-        <div id="liveDate"></div>
+        <div class="banner">
+            <div class="marquee" aria-hidden="true"><span>All the Best for Your Exams! • Stay Calm • Read Questions Carefully • Good Luck!</span></div>
+            <div class="top-actions">
+                <button id="themeToggle" title="Toggle dark mode">🌗 Theme</button>
+                <button id="downloadCsvBtn" class="btn">Download CSV</button>
+                <button id="pdfBtn" class="btn">Export PDF</button>
+            </div>
+        </div>
+
+        <div id="liveDate">Today: —</div>
 
         <div class="controls">
             <select id="semesterFilter">
-            <option value="all">All Semesters</option>
-            <option value="6th">6th CSE</option>
-            <option value="2nd">2nd CSE</option>
-        </select>
-            <input type="search" id="searchInput" placeholder="Search courses...">
-            <button id="downloadCsvBtn">Download CSV</button>
-            <button id="printBtn">Print / Save PDF</button>
+<option value="all">All Semesters</option>
+<option value="6th">6th CSE</option>
+<option value="2nd">2nd CSE</option>
+</select>
+            <input type="search" id="searchInput" placeholder="Search course, code...">
+            <button id="printBtn" class="btn">Print / Save PDF</button>
+            <div class="muted">Share:</div>
+            <a id="waShare" class="small-link" href="#" target="_blank">WhatsApp</a>
+            <a id="fbShare" class="small-link" href="#" target="_blank">Facebook</a>
+        </div>
+
+        <div class="summary">
+            <div class="stat">
+                <div style="font-size:13px;color:var(--muted)">Total Exams</div>
+                <div id="totalCount" style="font-size:18px;font-weight:700">0</div>
+            </div>
+            <div class="stat">
+                <div style="font-size:13px;color:var(--muted)">Done</div>
+                <div id="doneCount" style="font-size:18px;font-weight:700">0</div>
+            </div>
+            <div class="stat">
+                <div style="font-size:13px;color:var(--muted)">Upcoming</div>
+                <div id="upcomingCount" style="font-size:18px;font-weight:700">0</div>
+            </div>
+            <div class="progress-wrap">
+                <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Progress</div>
+                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="progressBar" style="width:0%"></i></div>
+            </div>
         </div>
 
         <div class="table-container">
-            <div class="table-watermark">
-                <img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png" alt="Logo Watermark">
-            </div>
+            <div class="table-watermark" aria-hidden="true"><img src="https://puc.ac.bd/Content/new-template-assets/images/puc_logo.png"></div>
             <table id="routineTable">
                 <thead>
                     <tr>
@@ -299,181 +433,248 @@
                         <th>Course Code</th>
                         <th>Course Title</th>
                         <th>Time Left</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-        </div>
-
-        <div class="note">
-            Note: Students must carry their ID and admit cards.
+            <div class="cards" id="cardList"></div>
         </div>
 
         <footer>
             <div class="sign">
-                <div class="sign-line"></div>
-                <small>Head, Department of CSE</small>
-            </div>
+                <div class="sign-line"></div><small>Head, Department of CSE</small></div>
             <div class="sign">
-                <div class="sign-line"></div>
-                <small>Controller of Examinations</small>
-            </div>
+                <div class="sign-line"></div><small>Controller of Examinations</small></div>
         </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
+        // Exam data
         const rows = [{
-            date: 'Tuesday, Oct 28, 2025',
-            time: '02.00PM – 05.00PM',
+            dateLabel: 'Tue, Oct 28, 2025',
+            time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3233(V4)',
-            title: 'Software Engineering'
+            title: 'Software Engineering',
+            iso: '2025-10-28T14:00:00'
         }, {
-            date: 'Monday, Nov 03, 2025',
-            time: '10.00AM – 01.00PM',
+            dateLabel: 'Mon, Nov 03, 2025',
+            time: '10:00AM – 01:00PM',
             semester: '2nd',
             code: '1411(V4)',
-            title: 'Discrete Mathematics and Number Theory'
+            title: 'Discrete Mathematics',
+            iso: '2025-11-03T10:00:00'
         }, {
-            date: 'Monday, Nov 03, 2025',
-            time: '02.00PM – 05.00PM',
+            dateLabel: 'Mon, Nov 03, 2025',
+            time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3567(V4)',
-            title: 'Computer Networks'
+            title: 'Computer Networks',
+            iso: '2025-11-03T14:00:00'
         }, {
-            date: 'Sunday, Nov 09, 2025',
-            time: '02.00PM – 05.00PM',
+            dateLabel: 'Sun, Nov 09, 2025',
+            time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3637(V4)',
-            title: 'Computer and Cyber Security'
+            title: 'Computer & Cyber Security',
+            iso: '2025-11-09T14:00:00'
         }, {
-            date: 'Saturday, Nov 15, 2025',
-            time: '02.00PM – 05.00PM',
+            dateLabel: 'Sat, Nov 15, 2025',
+            time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '4427(V4)',
-            title: 'Data Communication'
+            title: 'Data Communication',
+            iso: '2025-11-15T14:00:00'
         }, {
-            date: 'Wednesday, Nov 19, 2025',
-            time: '02.00PM – 05.00PM',
+            dateLabel: 'Wed, Nov 19, 2025',
+            time: '02:00PM – 05:00PM',
             semester: '6th',
             code: '3301(V4)',
-            title: 'Project Management and Entrepreneurship'
+            title: 'Project Management & Entrepreneurship',
+            iso: '2025-11-19T14:00:00'
         }];
 
         const tbody = document.querySelector('#routineTable tbody');
+        const cardList = document.getElementById('cardList');
         const semesterFilter = document.getElementById('semesterFilter');
         const searchInput = document.getElementById('searchInput');
+        const liveDate = document.getElementById('liveDate');
+        const totalCount = document.getElementById('totalCount');
+        const doneCount = document.getElementById('doneCount');
+        const upcomingCount = document.getElementById('upcomingCount');
+        const progressBar = document.getElementById('progressBar');
+        const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+        const printBtn = document.getElementById('printBtn');
+        const pdfBtn = document.getElementById('pdfBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const waShare = document.getElementById('waShare');
+        const fbShare = document.getElementById('fbShare');
+
+        // Filter function
+        function filteredRows() {
+            const sem = semesterFilter.value;
+            const q = searchInput.value.trim().toLowerCase();
+            return rows.filter(r => {
+                if (sem !== 'all' && r.semester !== sem) return false;
+                if (!q) return true;
+                return (r.dateLabel + ' ' + r.time + ' ' + r.code + ' ' + r.title).toLowerCase().includes(q);
+            });
+        }
+
+        // Render table & cards
+        function renderAll() {
+            const data = filteredRows();
+            renderTable(data);
+            renderCards(data);
+            updateSummary(data);
+        }
 
         function renderTable(data) {
             tbody.innerHTML = '';
             const now = new Date();
-            let nextExamIndex = null;
-            let minDiff = Infinity;
-
-            // Find next upcoming exam
+            let nextIdx = null,
+                minDiff = Infinity;
             data.forEach((r, i) => {
-                const examDate = new Date(r.date.replace(/,/g, ''));
-                const diffMs = examDate - now;
-                if (diffMs > 0 && diffMs < minDiff) {
-                    minDiff = diffMs;
-                    nextExamIndex = i;
+                const diff = new Date(r.iso) - now;
+                if (diff > 0 && diff < minDiff) {
+                    minDiff = diff;
+                    nextIdx = i;
                 }
             });
-
             data.forEach((r, i) => {
                 const tr = document.createElement('tr');
-                const examDate = new Date(r.date.replace(/,/g, ''));
-                const diffMs = examDate - new Date();
-                let diffText = '';
-                let diffColor = '';
-                let urgentIcon = '';
-
-                if (diffMs <= 0) {
-                    tr.classList.add('done');
-                    diffText = '✅ Done';
-                } else {
-                    if (i === nextExamIndex) tr.classList.add('next-exam');
-                    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-                    diffText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-                    if (diffMs <= 24 * 60 * 60 * 1000) {
-                        diffColor = 'red';
-                        urgentIcon = ' ⚡';
-                    }
-                }
-
                 tr.classList.add(r.semester === '6th' ? 'sem-6th' : 'sem-2nd');
-
+                const examDate = new Date(r.iso);
+                const isDone = examDate - now <= 0;
+                if (isDone) tr.classList.add('done');
+                if (!isDone && i === nextIdx) tr.classList.add('next-exam');
                 tr.innerHTML = `
-            <td data-label="Date">${r.date}</td>
-            <td data-label="Time">${r.time}</td>
-            <td data-label="Semester">${r.semester} CSE</td>
-            <td data-label="Course Code">${r.code}</td>
-            <td data-label="Course Title">${r.title}</td>
-            <td data-label="Time Left" style="color:${diffColor}">${diffText}${urgentIcon}</td>
-        `;
+<td>${r.dateLabel}</td>
+<td>${r.time}</td>
+<td>${r.semester} CSE</td>
+<td>${r.code}</td>
+<td style="text-align:left">${r.title}</td>
+<td class="timeleft" data-iso="${r.iso}">--</td>
+<td><button class="btn addCal" data-idx="${i}">Add to Google Calendar</button></td>`;
                 tbody.appendChild(tr);
             });
-        }
-
-        function applyFilters() {
-            const sem = semesterFilter.value;
-            const q = searchInput.value.toLowerCase();
-            const filtered = rows.filter(r => {
-                if (sem !== 'all' && r.semester !== sem) return false;
-                if (!q) return true;
-                return (r.date + r.time + r.code + r.title).toLowerCase().includes(q);
+            document.querySelectorAll('.addCal').forEach(btn => {
+                btn.addEventListener('click', () => window.open(buildGoogleCalendarLink(rows[btn.dataset.idx]), '_blank'));
             });
-            renderTable(filtered);
         }
 
-        semesterFilter.addEventListener('change', applyFilters);
-        searchInput.addEventListener('input', applyFilters);
+        function renderCards(data) {
+            cardList.innerHTML = '';
+            data.forEach((r, i) => {
+                const d = new Date(r.iso);
+                const isDone = d - new Date() <= 0;
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+<div class="meta"><div style="font-weight:700">${r.dateLabel}</div><div class="muted">${r.time}</div><div style="margin-top:8px"><span class="chip">${r.semester} CSE</span></div></div>
+<div class="main">
+<div style="display:flex; justify-content:space-between; gap:8px; align-items:center">
+<div><strong>${r.code}</strong> — ${r.title}</div>
+<div class="muted" style="font-size:13px"><span class="timeleft" data-iso="${r.iso}">--</span></div>
+</div>
+<div style="margin-top:10px; display:flex; gap:8px; align-items:center">
+<button class="btn addCalMobile" data-idx="${i}">Add Calendar</button>
+</div>
+</div>`;
+                if (isDone) div.style.opacity = '0.8';
+                cardList.appendChild(div);
+            });
+            document.querySelectorAll('.addCalMobile').forEach(b => b.addEventListener('click', () => window.open(buildGoogleCalendarLink(rows[b.dataset.idx]), '_blank')));
+        }
 
-        function toCSV(data) {
-            const header = ['Date', 'Time', 'Semester', 'Course Code', 'Course Title', 'Time Left'];
+        // Google Calendar link
+        function isoForGoogle(dt) {
+            return dt.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        }
+
+        function buildGoogleCalendarLink(row) {
+            const start = new Date(row.iso);
+            const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
+            const dates = isoForGoogle(start) + '/' + isoForGoogle(end);
+            const text = encodeURIComponent(`${row.code} — ${row.title}`);
+            const details = encodeURIComponent(`Exam for ${row.title} (${row.code})`);
+            const location = encodeURIComponent('Premier University, Chattogram');
+            return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
+        }
+
+        // Update time left
+        function updateTimeLeftCells() {
             const now = new Date();
-            const lines = data.map(r => {
-                const examDate = new Date(r.date.replace(/,/g, ''));
-                const diffMs = examDate - now;
-                const diffText = diffMs <= 0 ? 'Done' : `${Math.floor(diffMs/(1000*60*60*24))}d`;
-                return [r.date, r.time, r.semester + ' CSE', r.code, `"${r.title.replace(/"/g,'""')}"`, diffText].join(',');
+            document.querySelectorAll('.timeleft').forEach(td => {
+                const exam = new Date(td.dataset.iso);
+                const diff = exam - now;
+                if (diff <= 0) {
+                    td.textContent = '✅ Done';
+                } else {
+                    const days = Math.floor(diff / 86400000);
+                    const hours = Math.floor((diff % 86400000) / 3600000);
+                    const mins = Math.floor((diff % 3600000) / 60000);
+                    const secs = Math.floor((diff % 60000) / 1000);
+                    td.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
+                    if (diff <= 86400000) td.textContent += ' ⚡', td.style.color = 'crimson';
+                    else td.style.color = '';
+                }
             });
-            return [header.join(','), ...lines].join('\n');
         }
 
-        document.getElementById('downloadCsvBtn').addEventListener('click', () => {
-            const csv = toCSV(rows);
-            const blob = new Blob([csv], {
-                type: 'text/csv;charset=utf-8;'
-            });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'premier-university-cse-exam-routine-spring-2025.csv';
-            a.click();
-            URL.revokeObjectURL(url);
+        // Summary
+        function updateSummary(currentData) {
+            const total = currentData.length;
+            const now = new Date();
+            const done = currentData.filter(r => new Date(r.iso) - now <= 0).length;
+            const upcoming = total - done;
+            totalCount.textContent = total;
+            doneCount.textContent = done;
+            upcomingCount.textContent = upcoming;
+            progressBar.style.width = Math.round(done / total * 100) + '%';
+        }
+
+        // Dark mode
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
         });
 
-        document.getElementById('printBtn').addEventListener('click', () => window.print());
+        // Print / PDF
+        printBtn.addEventListener('click', () => window.print());
+        pdfBtn.addEventListener('click', () => html2pdf().from(document.querySelector('.container')).save());
 
+        // CSV Download
+        downloadCsvBtn.addEventListener('click', () => {
+            const csvContent = 'data:text/csv;charset=utf-8,Date,Time,Semester,Course Code,Title\n' + rows.map(r => `${r.dateLabel},${r.time},${r.semester},${r.code},${r.title}`).join('\n');
+            const a = document.createElement('a');
+            a.href = encodeURI(csvContent);
+            a.download = 'exam_routine.csv';
+            a.click();
+        });
+
+        // Filters
+        semesterFilter.addEventListener('change', renderAll);
+        searchInput.addEventListener('input', renderAll);
+
+        // Share links
+        const pageUrl = encodeURIComponent(window.location.href);
+        waShare.href = `https://api.whatsapp.com/send?text=Check%20my%20exam%20routine:%20${pageUrl}`;
+        fbShare.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+
+        // Live date
         function updateLiveDate() {
-            const now = new Date();
-            const options = {
-                weekday: 'long',
+            liveDate.textContent = 'Today: ' + new Date().toLocaleDateString(undefined, {
+                weekday: 'short',
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric'
-            };
-            document.getElementById('liveDate').textContent = "Today: " + now.toLocaleDateString('en-US', options);
-            renderTable(rows);
+            });
         }
-
-        setInterval(updateLiveDate, 1000);
+        setInterval(updateTimeLeftCells, 1000);
         updateLiveDate();
+        renderAll();
     </script>
 </body>
 
